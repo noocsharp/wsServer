@@ -263,6 +263,8 @@ extern "C" {
 	extern int ws_sendframe_txt(ws_cli_conn_t *cli, const char *msg);
 	extern int ws_sendframe_bin(ws_cli_conn_t *cli, const char *msg, uint64_t size);
 	extern int ws_get_state(ws_cli_conn_t *cli);
+	extern int ws_client_set_data(ws_cli_conn_t *client, void *data);
+	extern void *ws_client_get_data(ws_cli_conn_t *client);
 	extern int ws_close_client(ws_cli_conn_t *cli);
 	extern int ws_socket(struct ws_events *evs, uint16_t port, int thread_loop,
 		uint32_t timeout_ms);

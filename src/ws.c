@@ -70,6 +70,7 @@ struct ws_connection
 {
 	int client_sock; /**< Client socket FD.        */
 	int state;       /**< WebSocket current state. */
+	void *data;      /**< Pointer to any data.     */
 
 	/* Timeout thread and locks. */
 	pthread_mutex_t mtx_state;
@@ -232,6 +233,37 @@ static int set_client_state(ws_cli_conn_t *client, int state)
 	client->state = state;
 	pthread_mutex_unlock(&client->mtx_state);
 	return (0);
+}
+
+/**
+ * @brief Set client data
+ *
+ * @param client Client structure.
+ * @param data Pointer to data
+ *
+ */
+int ws_client_set_data(ws_cli_conn_t *client, void *data)
+{
+	if (!CLIENT_VALID(client))
+		return (-1);
+
+	client->data = data;
+
+	return 0;
+}
+
+/**
+ * @brief Get client data
+ *
+ * @param client Client structure.
+ *
+ */
+void *ws_client_get_data(ws_cli_conn_t *client)
+{
+	if (!CLIENT_VALID(client))
+		return NULL;
+
+	return client->data;
 }
 
 /**
